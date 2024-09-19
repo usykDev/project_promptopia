@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 import Profile from "@components/Profile";
 
@@ -29,11 +30,13 @@ const UserProfile = ({ params }) => {
   }, []);
 
   return (
-    <Profile
-      name={name[0].toUpperCase() + name.substring(1)}
-      desc={`Welcome to ${name}'s profile page`}
-      data={userPosts}
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Profile
+        name={name[0].toUpperCase() + name.substring(1)}
+        desc={`Welcome to ${name}'s profile page`}
+        data={userPosts}
+      />
+    </Suspense>
   );
 };
 
