@@ -69,15 +69,10 @@
 // export default EditPrompt;
 
 "use client";
-import { Suspense } from "react";
 import UpdatePrompt from "@components/UpdatePrompt";
 
 const UpdatePromptPage = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <UpdatePrompt />
-    </Suspense>
-  );
+  return <UpdatePrompt />;
 };
 
 export default UpdatePromptPage;
