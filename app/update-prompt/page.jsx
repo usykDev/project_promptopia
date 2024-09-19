@@ -2,20 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 import Form from "@components/Form";
 
 const EditPrompt = () => {
   const router = useRouter();
+  const [promptId, setPromptId] = useState(null);
   const searchParams = useSearchParams();
-  const promptId = searchParams.get("id"); // getting id value from query
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     prompt: "",
     tag: "",
   });
+
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (id) setPromptId(id);
+  }, [searchParams]);
+
+  if (!promptId) {
+    return <div>Loading...</div>; // Add a loading state if needed
+  }
 
   useEffect(() => {
     const getPromptDetails = async () => {
@@ -57,7 +65,7 @@ const EditPrompt = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <div>
       <Form
         type="Edit"
         post={post}
@@ -65,7 +73,7 @@ const EditPrompt = () => {
         submitting={submitting}
         handleSubmit={updatePrompt}
       />
-    </Suspense>
+    </div>
   );
 };
 

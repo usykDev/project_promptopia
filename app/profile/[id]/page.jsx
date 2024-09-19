@@ -3,17 +3,14 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 import Profile from "@components/Profile";
 
 const UserProfile = ({ params }) => {
-  const router = useRouter();
-
-  const { data: session } = useSession(); // we renamed data to the session
+  const { data: session } = useSession();
 
   const searchParams = useSearchParams();
-  const name = searchParams.get("name"); // getting id value from query
+  const name = searchParams.get("name") || "User";
   console.log("name", name);
 
   const [userPosts, setUserPosts] = useState([]);
@@ -30,13 +27,11 @@ const UserProfile = ({ params }) => {
   }, []);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Profile
-        name={name[0].toUpperCase() + name.substring(1)}
-        desc={`Welcome to ${name}'s profile page`}
-        data={userPosts}
-      />
-    </Suspense>
+    <Profile
+      name={name[0].toUpperCase() + name.substring(1)}
+      desc={`Welcome to ${name}'s profile page`}
+      data={userPosts}
+    />
   );
 };
 
