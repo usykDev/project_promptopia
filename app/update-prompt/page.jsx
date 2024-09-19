@@ -1,14 +1,21 @@
-"use client";
+"use client"; // Ensure it's a client-side component
 
-import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic"; // Disable static generation for this page
+
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import Form from "@components/Form";
 
 const EditPrompt = () => {
   const router = useRouter();
-  const [promptId, setPromptId] = useState(null);
   const searchParams = useSearchParams();
+  const [promptId, setPromptId] = useState(null);
+
+  // Retrieve promptId from searchParams
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (id) setPromptId(id);
+  }, [searchParams]);
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -17,16 +24,9 @@ const EditPrompt = () => {
   });
 
   useEffect(() => {
-    const id = searchParams.get("id");
-    if (id) setPromptId(id);
-  }, [searchParams]);
-
-  if (!promptId) {
-    return <div>Loading...</div>; // Add a loading state if needed
-  }
-
-  useEffect(() => {
     const getPromptDetails = async () => {
+      if (!promptId) return;
+
       const response = await fetch(`/api/prompt/${promptId}`);
       const data = await response.json();
 
@@ -65,15 +65,19 @@ const EditPrompt = () => {
   };
 
   return (
-    <div>
-      <Form
-        type="Edit"
-        post={post}
-        setPost={setPost}
-        submitting={submitting}
-        handleSubmit={updatePrompt}
-      />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      {promptId ? (
+        <Form
+          type="Edit"
+          post={post}
+          setPost={setPost}
+          submitting={submitting}
+          handleSubmit={updatePrompt}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
+    </Suspense>
   );
 };
 
