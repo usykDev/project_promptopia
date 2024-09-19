@@ -8,7 +8,7 @@ import Profile from "@components/Profile";
 
 const MyProfile = () => {
   const router = useRouter();
-  const { data: session, status } = useSession(); // Status added to check loading
+  const { data: session, status } = useSession();
 
   const [myPosts, setMyPosts] = useState([]);
 
@@ -26,11 +26,11 @@ const MyProfile = () => {
   }, [session]);
 
   if (status === "loading") {
-    return <div>Loading...</div>; // Show loading state while session is loading
+    return <div>Loading...</div>;
   }
 
   if (!session?.user.id) {
-    return <div>You need to be signed in to view this page.</div>; // Handle missing session
+    return <div>You need to be signed in to view this page.</div>;
   }
 
   const handleEdit = (post) => {

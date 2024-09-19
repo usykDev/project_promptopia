@@ -69,21 +69,3 @@ const EditPrompt = () => {
 };
 
 export default EditPrompt;
-
-// "use client";
-// import dynamic from "next/dynamic";
-// import { Suspense } from "react";
-
-// const DynamicUpdatePrompt = dynamic(() => import("@components/UpdatePrompt"), {
-//   ssr: false,
-// });
-
-// const UpdatePromptPage = () => {
-//   return (
-//     <Suspense fallback={<div>Loading...</div>}>
-//       <DynamicUpdatePrompt />
-//     </Suspense>
-//   );
-// };
-
-// export default UpdatePromptPage;
