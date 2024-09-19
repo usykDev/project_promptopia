@@ -1,5 +1,3 @@
-"use client";
-
 // import { useEffect, useState } from "react";
 // import { useRouter, useSearchParams } from "next/navigation";
 
@@ -70,17 +68,14 @@
 
 // export default EditPrompt;
 
+"use client";
 import { Suspense } from "react";
 import UpdatePrompt from "@components/UpdatePrompt";
-import { useSearchParams } from "next/navigation";
 
 const UpdatePromptPage = () => {
-  const searchParams = useSearchParams();
-  const promptId = searchParams.get("id");
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <UpdatePrompt promptId={promptId} />
+      <UpdatePrompt />
     </Suspense>
   );
 };
