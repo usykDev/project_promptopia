@@ -23,7 +23,7 @@ const MyProfile = () => {
 
       fetchPosts();
     }
-  }, [session]);
+  }, []);
 
   if (status === "loading") {
     return <div>Loading...</div>;
